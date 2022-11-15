@@ -26,6 +26,10 @@ const Signin = () => {
     e.preventDefault();
     try {
       const auth = getAuth();
+
+      if (!(email || password)) {
+        toast.warn("Please enter complete details !");
+      }
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -59,6 +63,7 @@ const Signin = () => {
                 value={email}
                 onChange={onChangeInputHandler}
                 className="form-control"
+                placeholder="test@test.com"
                 id="email"
                 aria-describedby="emailHelp"
               />
@@ -71,6 +76,7 @@ const Signin = () => {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={onChangeInputHandler}
+                placeholder="123456"
                 className="form-control"
                 id="password"
               />
@@ -92,6 +98,19 @@ const Signin = () => {
                 forgot Password
               </Link>
             </div>
+            {!(email && password) && (
+              <button
+                onClick={() =>
+                  setFormData({
+                    email: "test@test.com",
+                    password: "123456",
+                  })
+                }
+                className="btn signinbutton mb-2"
+              >
+                Guest Sign-in
+              </button>
+            )}
             <button type="submit" className="btn signinbutton">
               Sign in
             </button>
